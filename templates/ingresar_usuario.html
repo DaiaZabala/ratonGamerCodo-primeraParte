@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/ingresar_usuario.css') }}">
     <title>App Admin - Registrar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ingresar_usuario.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registrarse.css') }}">
 </head>
 
 <body>
@@ -13,75 +14,101 @@
     <header id="header"></header>
 
     <main>
-
         <section>
             <div class="container-form">
-
-                <form action="">
+                <form action="{{ url_for('registrarForm') }}" method="POST" enctype="multipart/form-data">
                     <div class="entrada">
                         <label for="nombre">Nombre:</label>
-                        <input type="text" name="nombre" id="nombre">
+                        <input type="text" name="nombre" id="nombre" required>
                     </div>
 
                     <div class="entrada">
                         <label for="apellido">Apellido:</label>
-                        <input type="text" name="apellido" id="apellido">
+                        <input type="text" name="apellido" id="apellido" required>
                     </div>
 
                     <div class="entrada">
-                        <label for="nombre_usuario">nombre usuario:</label>
-                        <input type="text" name="nombre_usuario" id="nombre_usuario">
+                        <label for="nombre_usuario">Nombre de usuario:</label>
+                        <input type="text" name="nombreUsuario" id="nombre_usuario" required>
                     </div>
 
                     <div class="entrada">
-                        <label for="correo_electronico">correo electrónico</label>
-                        <input type="email" name="correo" id="correo">
+                        <label for="correo">Correo electrónico:</label>
+                        <input type="email" name="correo" id="correo" required>
                     </div>
 
                     <div class="entrada">
-                        <label for="contraseña">contraseña</label>
-                        <input type="password" name="contraseña" id="contraseña">
+                        <label for="contraseña">Contraseña:</label>
+                        <input type="password" name="contraseña" id="contraseña" required>
                     </div>
 
-                    <div class="entrada">
-                        <label for="sexo">Sexo:</label>
-                        <input type="text" name="sexo" id="sexo">
+                    <div id="radio-button">
+                        <p>Sexo:</p>
+                        <div>
+                            <input type="radio" id="hombre" name="sexo" value="Hombre" checked>
+                            <label for="hombre">Hombre</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="mujer" name="sexo" value="Mujer">
+                            <label for="mujer">Mujer</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="otro" name="sexo" value="Otro">
+                            <label for="otro">Otro</label>
+                        </div>
                     </div>
 
                     <div class="entrada">
                         <label for="pais">País:</label>
-                        <input type="text" name="pais" id="pais">
+                        <select class="input-form" name="pais" id="pais" required>
+                            <option value="">Seleccionar país</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Bolivia">Bolivia</option>
+                            <option value="Brasil">Brasil</option>
+                            <option value="Chile">Chile</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="Ecuador">Ecuador</option>
+                            <option value="Paraguay">Paraguay</option>
+                            <option value="Peru">Peru</option>
+                            <option value="Uruguay">Uruguay</option>
+                            <option value="Venezuela">Venezuela</option>
+                            <option value="Otro">Otro</option>
+                        </select>
                     </div>
 
                     <div class="entrada">
-                        <label for="imagen">Imagen:</label>
-                        <input type="text" name="imagen" id="imagen">
+                        <label for="img-usuario">⬆ Imagen de usuario</label>
+                        <input type="file" name="img-usuario" id="img-usuario" accept="image/*">
                     </div>
+
+                    <!-- El campo rol puede omitirse si se asigna automáticamente desde el backend -->
+                    <!-- 
                     <div>
-                        <label for="rol">Rol de usuario (Ingresar 1- USUARIO 2- ADMINISTRADOR):</label>
+                        <label for="rol">Rol de usuario (1- ADMINISTRADOR, 2- USUARIO):</label>
                         <input class="input-form" type="number" id="rol" name="rol" required>                     
                     </div>
+                    -->
 
                     <div class="entrada">
-                        <button class="modificar" type="button" onclick="guardar()">Guardar</button>
+                        <button class="modificar" type="submit">Guardar</button>
                     </div>
-
                 </form>
 
             </div>
         </section>
-
     </main>
 
     <footer></footer>
+
     <script>
         const urls = {
             ingresar_usuario: "{{ url_for('ingresar_usuario') }}",
-            tabla_usuarios: "{{url_for ('tabla_usuarios')}}",
+            tabla_usuarios: "{{ url_for('tabla_usuarios') }}"
         };
     </script>
-    <script src="{{ url_for('static', filename='js/ingresar_usuario.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/header_ingresar.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/ingresar_usuario.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/header_ingresar.js') }}"></script>
+
 </body>
 
 </html>

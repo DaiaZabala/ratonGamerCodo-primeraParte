@@ -1,51 +1,88 @@
-function modificar() {
-    let id = document.getElementById("id").value;
-    let nombre_ingresado = document.getElementById("nombre").value;
-    let apellido_ingresado = document.getElementById("apellido").value; 
-    let nombre_usuario_ingresado = document.getElementById("nombre_usuario").value; 
-    let correo_electronico_ingresado = document.getElementById("correo").value; 
-    let contraseña_ingresado = document.getElementById("contraseña").value; 
-    let sexo_ingresado = document.getElementById("sexo").value; 
-    let pais_ingresado = document.getElementById("pais").value; 
-    let imagen_ingresada = document.getElementById("imagen").value; 
-    let rol = document.getElementById("rol").value;
 
-    let datos = {
-        nombre: nombre_ingresado,
-        apellido: apellido_ingresado,
-        nombre_usuario: nombre_usuario_ingresado,
-        correo: correo_electronico_ingresado,
-        contraseña: contraseña_ingresado,
-        sexo: sexo_ingresado,
-        pais: pais_ingresado,
-        imagen: imagen_ingresada,
-        rol: rol
-    };
+    function modificar(event) {
+        event.preventDefault(); // Previene recarga
 
-    console.log(datos);
+        let id = document.getElementById("id").value;
 
-    let url = "http://localhost:5000/update/"+id
-    var options = {
-        body: JSON.stringify(datos),
-        method: 'PUT',
-        
-        headers: { 'Content-Type': 'application/json' },
-        // el navegador seguirá automáticamente las redirecciones y
-        // devolverá el recurso final al que se ha redirigido.
-        redirect: 'follow'
-    }
-    fetch(url, options)
-        .then(function () {
-            console.log("modificado")
-            alert("Registro modificado")
+        let datos = {
+            nombre: document.getElementById("nombre").value,
+            apellido: document.getElementById("apellido").value,
+            nombre_usuario: document.getElementById("nombre_usuario").value,
+            correo: document.getElementById("correo").value,
+            contraseña: document.getElementById("contraseña").value,
+            sexo: document.getElementById("sexo").value,
+            pais: document.getElementById("pais").value,
+            imagen: document.getElementById("imagen").value,
+            rol: document.getElementById("rol").value
+        };
 
-            //Puedes utilizar window.location.href para obtener la URL actual, redirigir a otras páginas
-           window.location.href = "../tabla_usuarios.html";
-          
+        fetch(`http://localhost:5000/update/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        })
+        .then(res => {
+            if (res.ok) {
+                alert("Usuario actualizado correctamente");
+                window.location.href = "/tabla_usuarios";
+            } else {
+                throw new Error("Error en la modificación");
+            }
         })
         .catch(err => {
-            this.error = true
             console.error(err);
-            alert("Error al Modificar")
-        })      
-}
+            alert("No se pudo modificar el usuario");
+        });
+    }
+    
+    function modificarRol(event) {
+        event.preventDefault();
+    
+        const id = document.getElementById("id").value;
+        const rol = document.getElementById("rol").value;
+    
+        fetch(`/update/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ rol: rol }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Rol actualizado correctamente");
+            console.log(data);
+        })
+        .catch(error => {
+            console.error("Error al actualizar rol:", error);
+            alert("Hubo un error al actualizar el rol");
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector('form.campos-form');
+    
+        form.addEventListener("submit", function(event) {
+            // Validaciones del formulario antes de enviarlo
+            let valid = true;
+    
+            // Verificamos que todos los campos necesarios estén completos
+            const nombre = document.getElementById("nombre").value;
+            const apellido = document.getElementById("apellido").value;
+            const nombre_usuario = document.getElementById("nombre_usuario").value;
+            const correo = document.getElementById("correo").value;
+    
+            if (!nombre || !apellido || !nombre_usuario || !correo) {
+                valid = false;
+                alert("Todos los campos son necesarios.");
+            }
+    
+            // Si no es válido, evitamos que el formulario se envíe
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    });
+    

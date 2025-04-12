@@ -8,7 +8,6 @@
 </head>
 <body>
     <header></header>
-    
     <main>
         <div id="cont-main">
             <div id="cont-formulario">
@@ -29,67 +28,78 @@
                     </table>
                 </div>
                 <h1>Actualizar Datos</h1>
-                <form class="campos-form" action="{{ url_for('update', id=usuario.id) }}" method="post">
+                <form class="campos-form" action="{{ url_for('actualizar', id=usuario.id) }}" method="post">
                     <div>
-                        <!-- value="{{ usuario.id }}" -->
-                        <label for="id">ID</label>
-                        <input type="number" name="id" id="id" disabled>
+                        <!-- Campo ID (oculto, no editable) -->
+                        <input type="hidden" name="id" value="{{ usuario.id }}">
                     </div>
-            
+    
                     <div>
                         <label for="nombre">Nombre:</label>
-                        <input class="input-form" type="text" id="nombre" name="nombre"  disabled>
+                        <input class="input-form" type="text" id="nombre" name="nombre" value="{{ usuario.nombre }}">
                     </div>
-            
+    
                     <div class="entrada">
                         <label for="apellido">Apellido:</label>
-                        <input class="input-form" type="text" name="apellido" id="apellido" disabled>
+                        <input class="input-form" type="text" name="apellido" id="apellido" value="{{ usuario.apellido }}">
                     </div>
-            
+    
                     <div class="entrada">
                         <label for="nombre_usuario">Nombre de usuario:</label>
-                        <input class="input-form" type="text" name="nombre_usuario" id="nombre_usuario">
+                        <input class="input-form" type="text" name="nombre_usuario" id="nombre_usuario" value="{{ usuario.nombre_usuario }}">
                     </div>
-            
+    
                     <div class="entrada">
-                        <label for="correo_electronico">Correo electrónico:</label>
-                        <input class="input-form" type="email" name="correo" id="correo" disabled>
+                        <label for="correo">Correo electrónico:</label>
+                        <input class="input-form" type="email" name="correo" id="correo" value="{{ usuario.correo }}">
                     </div>
-            
+    
                     <div class="entrada">
                         <label for="contraseña">Contraseña:</label>
-                        <input class="input-form" type="password" name="contraseña" id="contraseña" disabled>
+                        <input class="input-form" type="password" name="contraseña" id="contraseña" value="{{ usuario.contraseña }}">
                     </div>
-            
+    
                     <div class="entrada">
                         <label for="sexo">Sexo:</label>
-                        <input class="input-form" type="text" name="sexo" id="sexo"  disabled>
+                        <input class="input-form" type="text" name="sexo" id="sexo" value="{{ usuario.sexo }}">
                     </div>
-            
+    
                     <div class="entrada">
                         <label for="pais">País:</label>
-                        <input class="input-form" type="text" name="pais" id="pais" disabled>
+                        <input class="input-form" type="text" name="pais" id="pais" value="{{ usuario.pais }}">
                     </div>
-            
+    
                     <div class="entrada">
                         <label for="imagen">Imagen:</label>
-                        <input class="input-form" type="text" name="imagen" id="imagen" disabled>
+                        <input class="input-form" type="text" name="imagen" id="imagen" value="{{ usuario.imagen }}">
                     </div>
-            
+    
                     <div>
                         <label for="rol">Rol de usuario (Ingresar 1- USUARIO 2- ADMINISTRADOR):</label>
-                        <input  type="number" id="rol" name="rol">
+                        <input type="number" id="rol" name="rol" value="{{ usuario.rol }}">
                     </div>
-                    
+    
                     <button class="modificar" type="submit">MODIFICAR</button>
-
                 </form>
                 <br>
-                <a href="{{ url_for('tabla_usuarios') }}" style="color: black;">Volver a Tabla de Usuarios</a>
+             <!-- Mensaje flash aquí
+             {% with messages = get_flashed_messages() %}
+             {% if messages %}
+                 <div class="alert-container">
+                     {% for message in messages %}
+                         <div class="alert alert-success">
+                             {{ message }}
+                         </div>
+                     {% endfor %}
+                 </div>
+             {% endif %}
+         {% endwith %} -->
             </div>
         </div>
+       
     </main>
-    
+   
+
     <footer></footer>
     <script>
         const urls = {
@@ -100,5 +110,4 @@
     <script src="{{ url_for('static', filename='js/editar_usuario.js') }}"></script>
     <script src="{{ url_for('static', filename='js/header_editar.js') }}"></script>
     <script src="{{ url_for('static', filename='js/datos_editar.js') }}"></script>
-</body>
-</html>
+    

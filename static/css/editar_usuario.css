@@ -1,13 +1,17 @@
-*{
+/* ::::: RESET BÁSICO ::::: */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: black;
 }
 
+/* ::::: FUENTES PERSONALIZADAS ::::: */
 @font-face {
     font-family: "bebasNeue";
     src: url('../../assets/fonts/BebasNeue-Regular/BebasNeue-Regular.ttf');
@@ -28,7 +32,7 @@ body{
     src: url('../../assets/fonts/Yantramanav/Yantramanav-Black.ttf');
 }
 
-/*::::: Encabezado :::::*/
+/* ::::: ENCABEZADO ::::: */
 #header {
     background-color: #0a1a2a;
     width: 100%;
@@ -36,39 +40,43 @@ body{
     display: flex;
     flex-direction: row;
     align-items: center;
- }
+}
 
-#logo-header{
+#logo-header {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    box-shadow: 0 0 20px #D966ba;
+    box-shadow: 0 0 20px #52B5F2;
     margin-left: 10px;
     margin-right: 10px;
 }
 
 #nombre-web {
     font-family: "poetsenOne";
-    color: #d966ba;
+    color: #52B5F2;
     font-size: 40px;
     margin-right: 190px;
-    
 }
 
-#app-admin{
-     font-family: "dancingScript";
-     color:#52B5F2;
-     font-size: 60px;
-     margin-right: 180px;
+#app-admin {
+    font-family: "dancingScript";
+    color: #52B5F2;
+    font-size: 60px;
+    margin-right: 180px;
 }
 
-a:hover{
-    color: rgb(215, 102, 185);
+a {
+    color: #222;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #52B5F2;
 }
 
 .hipervinc-header {
     text-decoration: none;
-    border: 2px solid rgba(215, 102, 185, 0.45);
+    border: 2px solid rgba(82, 181, 242, 0.45);
     text-align: center;
     width: 110px;
     height: 60px;
@@ -76,23 +84,22 @@ a:hover{
     margin-left: 100px;
     padding: 10px;
     font-family: "poetsenOne";
-    font-size:16px;
+    font-size: 16px;
     color: white;
     transition: color 0.3s;
 }
 
-.menu{ 
+.menu {
     display: grid;
-    grid-template-columns: repeat(2,110px);
-    grid-template-rows: repeat(1,40px);
-    
+    grid-template-columns: repeat(2, 110px);
+    grid-template-rows: repeat(1, 40px);
     column-gap: 25px;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
 }
 
-/*::::: Main :::::*/
-.container-form{
+/* ::::: MAIN FORM ::::: */
+.container-form {
     background-image: url('../img/img-main.jpg');
     height: auto;
     display: flex;
@@ -101,187 +108,234 @@ a:hover{
     justify-content: center;
 }
 
-form{
-    width: 25%;
+form {
+    width: 55%;
     display: flex;
     flex-direction: column;
     justify-content: start;
     padding: 5px;
     row-gap: 15px;
-    background-color: white;
-    border-radius: 15px;  
+    background-color: #ffffff;
+    border-radius: 15px;
 }
 
-.entrada{
+.entrada {
     margin-bottom: 2vh;
 }
 
-label{
+label {
     font-size: 16px;
-    font-family: "bebasNeue";  
+    font-family: "bebasNeue";
+    color: #111;
 }
 
-input{
+input {
     width: 100%;
     padding: 6px 8px;
     font-size: 16px;
     color: #495057;
     background-color: white;
-    background-clip: padding-box;
     border: 2px solid black;
-    border-radius: 25px;;
+    border-radius: 25px;
+}
+
+input:disabled {
+    background-color: #d3d6d8;
 }
 
 button {
     padding: 0.2vw 0.3vh;
     font-size: 1.6vw;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    /* background-color: #ff9999; */
-    background-color: var(--color-rosa);
+    background-color: #007bff;
     color: #ffffff;
     border: none;
     border-radius: 0.5vw;
     cursor: pointer;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #ff6666;
 }
 
-.modificar{
+button:hover {
+    background-color: #0056b3;
+}
+
+.modificar {
     color: #f2f2f2;
     margin-right: 2vh;
-    background-color: #ff9999; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 0.5vw 3vh; /* Relleno interno */
-    border: none; /* Quita el borde */
-    border-radius: 2vw; /* Borde redondeado */
-    text-align: center; /* Alineación del texto */
-    text-decoration: none; /* Quita el subrayado predeterminado */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 1vw; /* Tamaño de fuente */
-    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    background-color: #007bff;
+    padding: 0.5vw 3vh;
+    border: none;
+    border-radius: 2vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1vw;
+    cursor: pointer;
 }
 
-
-input:disabled
-{
-	background-color   : #d3d6d8;
+/* ::::: TABLA DE USUARIOS ::::: */
+section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
+#cont-bt-registrar {
+    display: flex;
+    flex-direction: column;
+}
 
-@media screen and (max-width:768px){
-    form{
-        background-color: #001F3F;
+h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: auto;
+    display: block;
+}
+
+.tabla thead {
+    background-color: #333;
+    color: white;
+}
+
+.tabla th {
+    padding: 14px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 2px solid #444;
+}
+
+.tabla td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #ddd;
+    color: #444;
+    font-size: 0.92rem;
+}
+
+.tabla tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* ::::: MEDIA QUERIES ::::: */
+@media (max-width: 768px) {
+    form {
+        background-color: #f0f0f0;
         width: 50vw;
-        height: 50vh;
+        height: auto;
         border-radius: 3vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
     }
 
-    label{
+    label,
+    a {
         font-size: 4vw;
         font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        color: aliceblue;
+        color: #111;
     }
 
-    a{
-        font-size: 4vw;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        text-decoration: none;
-        color: aliceblue;
-        
+    .modificar {
+        font-size: 3vw;
     }
 
-    .modificar{
-        color: #f2f2f2;
-        margin-right: 2vh;
-        background-color: #ff9999; /* Color de fondo */
-        color: white; /* Color del texto */
-        padding: 0.5vw 3vh; /* Relleno interno */
-        border: none; /* Quita el borde */
-        border-radius: 2vw; /* Borde redondeado */
-        text-align: center; /* Alineación del texto */
-        text-decoration: none; /* Quita el subrayado predeterminado */
-        display: inline-block; /* Mostrar como bloque en línea */
-        font-size: 3vw; /* Tamaño de fuente */
-        cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    .tabla th,
+    .tabla td {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    .tabla img {
+        width: 80px;
+        height: 80px;
     }
 }
 
-@media screen and (max-width:425px){
-    form{
-        background-color: #001F3F;
+@media (max-width: 425px) {
+    form {
+        background-color: #f0f0f0;
         width: 80vw;
-        height: 40vh;
-        border-radius: 3vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        height: auto;
     }
 
-    label{
+    label,
+    a {
         font-size: 6vw;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        color: aliceblue;
+        color: #111;
     }
 
-    a{
-        font-size: 6vw;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        text-decoration: none;
-        color: aliceblue;
-        
-    }
-
-    .modificar{
-        color: #f2f2f2;
-        margin-right: 2vh;
-        background-color: #ff9999; /* Color de fondo */
-        color: white; /* Color del texto */
-        padding: 0.5vw 3vh; /* Relleno interno */
-        border: none; /* Quita el borde */
-        border-radius: 2vw; /* Borde redondeado */
-        text-align: center; /* Alineación del texto */
-        text-decoration: none; /* Quita el subrayado predeterminado */
-        display: inline-block; /* Mostrar como bloque en línea */
-        font-size: 5vw; /* Tamaño de fuente */
-        cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    .modificar {
+        font-size: 5vw;
     }
 }
 
-
-@media screen and (max-width:320px){
-    form{
-        background-color: #001F3F;
+@media (max-width: 320px) {
+    form {
         width: 80vw;
-        height: 50vh;
-        border-radius: 3vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    label{
-        font-size: 6vw;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        color: aliceblue;
-    }
-
-    a{
-        font-size: 6vw;
-        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        text-decoration: none;
-        color: aliceblue;
-        
+        height: auto;
     }
 }
+#cont-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
 
+#cont-formulario {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
 
+#titulo {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#titulo h2 {
+    font-family: "poetsenOne";
+    font-size: 2rem;
+    color: #52B5F2;
+    margin-bottom: 10px;
+}
+
+/* Estilo para la tabla de datos actuales */
+#titulo table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #0a1a2a;
+    color: #f2f2f2;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#titulo table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #333;
+    font-size: 0.95rem;
+}
+
+#titulo table img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 6px #52B5F2;
+}

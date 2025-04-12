@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, session
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -60,19 +60,6 @@ with app.app_context():
 def index():
     return render_template('index.html')
 
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return redirect(request.url)
-    file = request.files['file']
-    if file.filename == '':
-        return redirect(request.url)
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # Guarda la ruta de la imagen en la base de datos, si es necesario
-        return redirect(url_for('uploaded_file', filename=filename))
-
 @app.route('/registrarse')
 def registrarse():
     return render_template('registrarse.html')
@@ -92,7 +79,7 @@ def actualizarPerfil():
 @app.route('/foro')
 def foro():
     if session.get('logueado'):
-        return render_template('foro.html', usuario=usuarios)
+        return render_template('foro.html', usuario=usuario)
     else:
         mensaje = 'Por favor inicia sesión para acceder al foro.'
         return render_template('iniciar-sesion.html', mensaje=mensaje)
@@ -115,7 +102,8 @@ def allowed_file(filename):
 @app.route("/usuario",  methods=['GET'])
 def usuario():
     # Consultar en la tabla todos los usuarios
-    # all_registros -> lista de objetos
+    # all_r
+    # egistros -> lista de objetos
     all_registros = Usuario.query.all()
 
     # Lista de diccionarios
@@ -124,41 +112,45 @@ def usuario():
     for objeto in all_registros:
         data_serializada.append({"id":objeto.id, "nombre":objeto.nombre, "apellido":objeto.apellido, "nombre_usuario":objeto.nombre_usuario, "correo":objeto.correo, "contraseña":objeto.contraseña, "sexo":objeto.sexo, "pais":objeto.pais, "imagen":objeto.imagen})
 
-   
-@app.route('/update/<int:id>', methods=['POST'])
-def update(id):
-    # Obtener los datos del formulario enviado
-    nombre_usuario = request.form.get('nombre_usuario')
-    rol = request.form.get('rol')
-    # usuario = Usuario.query.get_or_404(id)
-    
-    data = request.get_json()
 
-    nombre = request.json["nombre"]
-    apellido=request.json['apellido']
-    nombre_usuario=request.json['nombre_usuario']
-    correo=request.json['correo']
-    contraseña=request.json['contraseña']
-    sexo=request.json['sexo']
-    pais=request.json['pais']
-    imagen=request.json['imagen']
-    rol= request.json['rol']
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
+def actualizar(id):
+    usuario = Usuario.query.get_or_404(id)
 
-    usuario.nombre=nombre
-    usuario.apellido=apellido
-    usuario.nombre_usuario=nombre_usuario
-    usuario.correo=correo
-    usuario.contraseña=contraseña
-    usuario.sexo=sexo
-    usuario.pais=pais
-    usuario.imagen=imagen
-    usuario.rol=rol
-    db.session.commit()
-    
-    data_serializada = [{"id":usuario.id, "nombre":usuario.nombre, "apellido":usuario.apellido, "nombre_usuario":usuario.nombre_usuario, "correo_electronico":usuario.correo, "contraseña":usuario.contraseña, "sexo":usuario.sexo, "pais":usuario.pais, "imagen":usuario.imagen, "rol":usuario.rol}]
-    
-    return jsonify(data_serializada)
+    if request.method == 'POST':
+        cambios = False  # Bandera para saber si algo cambió
 
+        # Lista de campos a verificar
+        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contraseña', 'sexo', 'pais', 'imagen', 'rol']
+
+        for campo in campos:
+            valor_nuevo = request.form.get(campo)
+            if getattr(usuario, campo) != valor_nuevo:
+                setattr(usuario, campo, valor_nuevo)
+                cambios = True
+
+        if cambios:
+            db.session.commit()
+            return redirect(url_for('tabla_usuarios', mensaje='modificado'))
+        else:
+            return redirect(url_for('tabla_usuarios', mensaje='sin_cambios'))
+
+    else:
+        return render_template('editar_usuario.html', usuario=usuario)
+
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Guarda la ruta de la imagen en la base de datos, si es necesario
+        return redirect(url_for('uploaded_file', filename=filename))
 @app.route('/form', methods=['GET', 'POST'])
 def registrarForm():
     if request.method == 'POST':

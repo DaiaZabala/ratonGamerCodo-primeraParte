@@ -1,13 +1,18 @@
-*{
+/* Reset global para márgenes y rellenos */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+/* Estilo del body */
+body {
     width: 100%;
+    background-color: #05070d;
+    font-family: 'yantramanav', sans-serif; /* Fuente global */
 }
 
+/* Fuentes personalizadas */
 @font-face {
     font-family: "bebasNeue";
     src: url('../../assets/fonts/BebasNeue-Regular/BebasNeue-Regular.ttf');
@@ -27,47 +32,101 @@ body{
     font-family: "yantramanav";
     src: url('../../assets/fonts/Yantramanav/Yantramanav-Black.ttf');
 }
+/* ::::: MEDIA QUERIES ::::: */
+@media (max-width: 768px) {
+    #header {
+        flex-direction: column; /* Cambio a columna en pantallas pequeñas */
+        height: auto; /* El encabezado se ajusta automáticamente */
+        padding: 10px 0; /* Ajustar el relleno */
+    }
 
+    #logo-header {
+        width: 80px; /* Ajustamos el tamaño del logo en pantallas pequeñas */
+        height: 80px;
+    }
 
+    #nombre-web, #app-admin {
+        font-size: 32px; /* Reducimos el tamaño de la fuente */
+        margin-right: 0; /* Eliminamos el margen para alinearlo mejor */
+    }
 
+    .hipervinc-header, .menu {
+        margin-left: 0; /* Eliminamos márgenes laterales */
+        width: 100%; /* Hacemos que ocupen todo el ancho disponible */
+        margin-top: 10px; /* Espacio superior */
+    }
+}
 
+@media (max-width: 425px) {
+    #header {
+        padding: 10px; /* Ajustamos el relleno para pantallas más pequeñas */
+    }
 
-/*::::: Encabezado :::::*/
+    #nombre-web, #app-admin {
+        font-size: 28px; /* Aumentamos el ajuste de la fuente */
+    }
+
+    .hipervinc-header, .menu {
+        width: 90%; /* Los botones ocupan casi todo el ancho */
+        font-size: 14px; /* Ajustamos el tamaño de la fuente */
+    }
+}
+/* ::::: Encabezado ::::: */
 #header {
-    background-color: #0a1a2a;
+    background-color: #0a1a2a; /* Mismo color de fondo */
     width: 100%;
-    height: 25vh;
+    height: 25vh; /* Altura igual */
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between; /* Asegura que los elementos estén distribuidos */
+    padding: 0 20px; /* Ajuste de relleno para espaciar los elementos */
  }
 
-#logo-header{
+#logo-header {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    box-shadow: 0 0 20px #D966ba;
+    box-shadow: 0 0 20px #52B5F2;
     margin-left: 10px;
     margin-right: 10px;
 }
 
 #nombre-web {
     font-family: "poetsenOne";
-    color: #d966ba;
+    color: #52B5F2;
     font-size: 40px;
     margin-right: 190px;
-    
 }
 
-#app-admin{
-     font-family: "dancingScript";
-     color:#52B5F2;
-     font-size: 60px;
-     margin-right: 180px;
+#app-admin {
+    font-family: "dancingScript";
+    color: #52B5F2;
+    font-size: 60px;
+    margin-right: 180px;
 }
 
-a:hover{
-    color: rgb(215, 102, 185);
+a {
+    color: #222;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #52B5F2;
+}
+.hipervinc-header {
+    text-decoration: none;
+    border: 2px solid rgba(82, 181, 242, 0.45);
+    text-align: center;
+    width: 110px;
+    height: 60px;
+    background-color: rgba(146, 158, 170, 0.7);
+    margin-left: 100px;
+    padding: 10px;
+    font-family: "poetsenOne";
+    font-size: 16px;
+    color: white;
+    transition: color 0.3s;
 }
 
 .menu {
@@ -80,69 +139,87 @@ a:hover{
     margin-left: 100px;
     padding: 10px;
     font-family: "poetsenOne";
-    font-size:16px;
+    font-size: 16px;
     color: white;
     transition: color 0.3s;
 }
 
-
-
-
-
-/*::::: Main :::::*/
-.container{
-    background:  #05070d;
-    height: 100vh;
+/* ::::: Main ::::: */
+.container {
+    background: #05070d;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
 }
 
-#titulo{
-    color:#52B5F2;
+#titulo {
+    color: #52B5F2;
     font-family: "bebasNeue";
     font-size: 45px;
     margin-top: 50px;
-
 }
 
-#añadir{
-    color:#52B5F2;
+#añadir {
+    color: #52B5F2;
     font-family: "yantramanav";
     font-size: 18px;
     margin-right: 10px;
 }
 
-#cont-bt-registrar{
+#cont-bt-registrar {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 60px;
+    margin-top: 30px; /* Ajustado para más espacio */
+    margin-bottom: 20px; /* Espacio entre el botón y la tabla */
+}
+
+/* Botón Nuevo */
+.nuevo {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5vw 3vh;
+    border: none;
+    border-radius: 2vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.nuevo:hover {
+    background-color: #45a049;
+}
+
+/* Tabla */
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%; /* Centrar tabla */
+    margin: 0 auto;
 }
 
 table {
-    
-    
     border-collapse: collapse;
-    width: 60vw;
-    max-width: 60vw;
-    margin: 2vw auto;
+    width: 100%; /* Hace que ocupe todo el contenedor */
     font-family: "yantramanav";
-    
     font-size: 18px;
-    height:auto;
-    
-  }
+    background-color: #1a2a3a; /* Fondo oscuro para la tabla */
+    border-radius: 10px;
+    margin-top: 20px;
+}
 
 th, td {
     border: 0.1vw solid #dddddd;
     padding: 0.8vw;
     text-align: left;
     color: #dddddd;
-    
-  }
+}
 
 th {
     background-color: #f2f2f2;
@@ -151,70 +228,47 @@ th {
     text-align: center;
 }
 
-a{
-    text-decoration: none;
-    color: #dddddd;
-}
-
-td:hover{
+td:hover {
     background-color: #f2f2f2;
-    color:var(--color-turquesa)
+    color: var(--color-turquesa);
 }
 
-
-
-button{
-    
+/* Botones dentro de la tabla */
+button {
     margin-right: 2vh;
-    background-color: red; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 0.5vw 3vh; /* Relleno interno */
-    border: none; /* Quita el borde */
-    border-radius: 2vw; /* Borde redondeado */
-    text-align: center; /* Alineación del texto */
-    text-decoration: none; /* Quita el subrayado predeterminado */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 1vw; /* Tamaño de fuente */
-    cursor: pointer; /* Cambia el cursor al pasar el ratón */
-    
+    background-color: red;
+    color: white;
+    padding: 0.5vw 3vh;
+    border: none;
+    border-radius: 2vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.boton{
-    
+button:hover {
+    background-color: darkred;
+}
+
+.boton {
     color: #f2f2f2;
     margin-right: 2vh;
-    background-color: #ddeb18; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 0.5vw 3vh; /* Relleno interno */
-    border: none; /* Quita el borde */
-    border-radius: 2vw; /* Borde redondeado */
-    text-align: center; /* Alineación del texto */
-    text-decoration: none; /* Quita el subrayado predeterminado */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 1vw; /* Tamaño de fuente */
-    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    background-color: #ddeb18;
+    color: white;
+    padding: 0.5vw 3vh;
+    border: none;
+    border-radius: 2vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1vw;
+    cursor: pointer;
 }
 
-.nuevo{
-    color: #f2f2f2;
-    margin-right: 2vh;
-    background-color: #4CAF50; /* Color de fondo */
-    color: white; /* Color del texto */
-    padding: 0.5vw 3vh; /* Relleno interno */
-    border: none; /* Quita el borde */
-    border-radius: 2vw; /* Borde redondeado */
-    text-align: center; /* Alineación del texto */
-    text-decoration: none; /* Quita el subrayado predeterminado */
-    display: inline-block; /* Mostrar como bloque en línea */
-    font-size: 1vw; /* Tamaño de fuente */
-    cursor: pointer; /* Cambia el cursor al pasar el ratón */
-}
-
-
-img{
+img {
     width: 6vw;
     height: 10vh;
 }
-
-
-
