@@ -7,42 +7,41 @@ from sqlalchemy.exc import IntegrityError
 import os
 
 app = Flask(__name__, template_folder='templates')
-# Carpeta donde se guardarán temporalmente las imágenes
+
+# Carpeta para imágenes temporales
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'static/temp')
-app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}  # Extensiones de archivos permitidas
-# Tamaño máximo del archivo subido (por ejemplo, 16MB)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 
-CORS(app)
-
-# Configuración de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:@localhost:3306/usuariosgamers'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Configuración de la clave secreta
+# Clave secreta
 app.config['SECRET_KEY'] = os.urandom(24)
 
+# Conexión a PostgreSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://usuariosgamers_user:ogeJ1nFI1aAu3iv6cOrDEcFoNbkziUeV@dpg-cvusba3e5dus73e0idp0-a/usuariosgamers'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+CORS(app)
 db = SQLAlchemy(app)
 
-# Definición del modelo Usuario
+# Modelo de usuario
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
     apellido = db.Column(db.String(50), nullable=False)
     nombre_usuario = db.Column(db.String(50), unique=True, nullable=False)
     correo = db.Column(db.String(100), unique=True, nullable=False)
-    contraseña = db.Column(db.String(100), nullable=False)
+    contraseña = db.Column(db.String(255), nullable=False)
     sexo = db.Column(db.String(10), nullable=False)
     pais = db.Column(db.String(50))
     imagen = db.Column(db.String(200))
     rol = db.Column(db.String(8), nullable=False, default='usuario')
 
-    def __init__(self, nombre, apellido, nombre_usuario, correo, contraseña, sexo, pais=None, imagen=None, rol=1):
+    def __init__(self, nombre, apellido, nombre_usuario, correo, contraseña, sexo, pais=None, imagen=None, rol='2'):
         self.nombre = nombre
         self.apellido = apellido
         self.nombre_usuario = nombre_usuario
         self.correo = correo
-        self.contraseña = contraseña
+        self.contraseña = generate_password_hash(contraseña)
         self.sexo = sexo
         self.pais = pais
         self.imagen = imagen
@@ -51,11 +50,10 @@ class Usuario(db.Model):
     def __repr__(self):
         return f"<Usuario {self.nombre_usuario}>"
 
-# Crear todas las tablas definidas en los modelos
+# Crear tablas
 with app.app_context():
     db.create_all()
 
-# Definición de rutas
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -79,7 +77,7 @@ def actualizarPerfil():
 @app.route('/foro')
 def foro():
     if session.get('logueado'):
-        return render_template('foro.html', usuario=usuario)
+        return render_template('foro.html')
     else:
         mensaje = 'Por favor inicia sesión para acceder al foro.'
         return render_template('iniciar-sesion.html', mensaje=mensaje)
@@ -87,70 +85,69 @@ def foro():
 @app.route('/tabla_usuarios')
 def tabla_usuarios():
     usuarios = Usuario.query.all()
-
     return render_template('tabla_usuarios.html', usuarios=usuarios)
 
 @app.route('/ingresar_usuario')
 def ingresar_usuario():
     return render_template('ingresar_usuario.html')
 
-# Función para verificar extensiones de archivos permitidas
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-# Retornar todos los registros en un Json
-@app.route("/usuario",  methods=['GET'])
+@app.route('/usuario', methods=['GET'])
 def usuario():
-    # Consultar en la tabla todos los usuarios
-    # all_r
-    # egistros -> lista de objetos
     all_registros = Usuario.query.all()
-
-    # Lista de diccionarios
-    data_serializada = []
-    
-    for objeto in all_registros:
-        data_serializada.append({"id":objeto.id, "nombre":objeto.nombre, "apellido":objeto.apellido, "nombre_usuario":objeto.nombre_usuario, "correo":objeto.correo, "contraseña":objeto.contraseña, "sexo":objeto.sexo, "pais":objeto.pais, "imagen":objeto.imagen})
-
+    data_serializada = [{
+        "id": u.id,
+        "nombre": u.nombre,
+        "apellido": u.apellido,
+        "nombre_usuario": u.nombre_usuario,
+        "correo": u.correo,
+        "sexo": u.sexo,
+        "pais": u.pais,
+        "imagen": u.imagen
+    } for u in all_registros]
+    return jsonify(data_serializada)
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def actualizar(id):
     usuario = Usuario.query.get_or_404(id)
 
     if request.method == 'POST':
-        cambios = False  # Bandera para saber si algo cambió
-
-        # Lista de campos a verificar
-        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contraseña', 'sexo', 'pais', 'imagen', 'rol']
-
+        cambios = False
+        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'sexo', 'pais', 'imagen', 'rol']
+        
         for campo in campos:
             valor_nuevo = request.form.get(campo)
             if getattr(usuario, campo) != valor_nuevo:
                 setattr(usuario, campo, valor_nuevo)
                 cambios = True
 
+        contraseña_nueva = request.form.get('contraseña')
+        if contraseña_nueva and not check_password_hash(usuario.contraseña, contraseña_nueva):
+            usuario.contraseña = generate_password_hash(contraseña_nueva)
+            cambios = True
+
         if cambios:
             db.session.commit()
             return redirect(url_for('tabla_usuarios', mensaje='modificado'))
         else:
             return redirect(url_for('tabla_usuarios', mensaje='sin_cambios'))
-
     else:
         return render_template('editar_usuario.html', usuario=usuario)
 
-
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    if 'file' not in request.files:
+    if 'file' not in request.files or request.files['file'].filename == '':
         return redirect(request.url)
+    
     file = request.files['file']
-    if file.filename == '':
-        return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # Guarda la ruta de la imagen en la base de datos, si es necesario
-        return redirect(url_for('uploaded_file', filename=filename))
+        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(path)
+        return jsonify({"mensaje": "Archivo subido exitosamente", "ruta": path})
+
 @app.route('/form', methods=['GET', 'POST'])
 def registrarForm():
     if request.method == 'POST':
@@ -162,19 +159,15 @@ def registrarForm():
         sexo = request.form['sexo']
         pais = request.form.get('pais')
         imagen = None
-            
-        # Manejo de la imagen de usuario
+
         if 'img-usuario' in request.files:
             file = request.files['img-usuario']
-            if file.filename != '':
-                if allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    imagen = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                else:
-                    return jsonify({'message': 'Extensión de archivo no permitida'}), 400
-        
-        # Crear una instancia del modelo Usuario
+            if file.filename and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(path)
+                imagen = path
+
         nuevo_usuario = Usuario(
             nombre=nombre,
             apellido=apellido,
@@ -184,30 +177,17 @@ def registrarForm():
             sexo=sexo,
             pais=pais,
             imagen=imagen,
-            rol='2'  # Asignar rol por defecto
+            rol='2'
         )
-        
+
         try:
-            # Agregar el nuevo usuario a la sesión de SQLAlchemy
             db.session.add(nuevo_usuario)
-            # Confirmar la transacción para que se guarde en la base de datos
             db.session.commit()
-            
-            # Si se ha cargado una imagen, actualizar la instancia de Usuario con la ruta de la imagen
-            if imagen:
-                nuevo_usuario.imagen = imagen
-                db.session.commit()
-            
-            # Redirigir al usuario a la página de inicio después de registrarse
             return redirect(url_for('index', msg='Usuario registrado con éxito'))
-        
         except Exception as e:
-            # Manejo de errores, por ejemplo, si falla la inserción en la base de datos
             db.session.rollback()
             print(f"Error al registrar usuario: {str(e)}")
             return redirect(url_for('index')), 500
-    
-    # Renderizar la página de registro por defecto si el método no es POST
     return render_template('registrarse.html', msg='Método HTTP incorrecto')
 
 @app.route('/iniciar-sesion', methods=["GET", "POST"])
@@ -215,61 +195,44 @@ def iniciar_sesion():
     if request.method == 'GET':
         return render_template('iniciar-sesion.html')
 
-    elif request.method == 'POST':
-        correo = request.form['correo']
-        contraseña = request.form['contraseña']
+    correo = request.form['correo']
+    contraseña = request.form['contraseña']
+    usuario = Usuario.query.filter_by(correo=correo).first()
 
-        # Buscar el usuario en la base de datos usando SQLAlchemy
-        usuario = Usuario.query.filter_by(correo=correo).first()
-
-        # Comparación directa de contraseñas
-        if usuario:
-            if usuario.contraseña == contraseña:
-                session['logueado'] = True
-                # Verificar el rol del usuario y redirigir según el rol
-                if usuario.rol == '2':
-                    return render_template("usuarioRegistrado.html")
-                elif usuario.rol == '1':
-                    # Redirigir a la página de tabla de usuarios
-                    return redirect(url_for('tabla_usuarios'))
-                else:
-                    return render_template("cerrar.html", mensaje="Rol de usuario no válido o indefinido")
-            else:
-                return render_template("cerrar.html", mensaje="Contraseña incorrecta")
+    if usuario and check_password_hash(usuario.contraseña, contraseña):
+        session['logueado'] = True
+        if usuario.rol == '2':
+            return render_template("usuarioRegistrado.html")
+        elif usuario.rol == '1':
+            return redirect(url_for('tabla_usuarios'))
         else:
-            return render_template("cerrar.html", mensaje="Usuario no encontrado")
-
+            return render_template("cerrar.html", mensaje="Rol de usuario no válido o indefinido")
+    else:
+        return render_template("cerrar.html", mensaje="Usuario o contraseña incorrectos")
 
 @app.route('/cerrar-sesion')
 def cerrar_sesion():
-    # Limpiar la sesión al cerrar sesión
     session.clear()
     return redirect(url_for('index'))
 
 @app.route('/borrar/<int:id>', methods=['DELETE'])
 def borrar(id):
-    # Lógica para eliminar al usuario por su ID
     usuario = Usuario.query.get(id)
     if usuario:
         db.session.delete(usuario)
         db.session.commit()
-        return redirect(url_for('tabla_usuarios'))  # Redirigir a la página de tabla_usuarios después de eliminar
+        return redirect(url_for('tabla_usuarios'))
     else:
         return jsonify({'error': 'Usuario no encontrado'}), 404
-        
 
 @app.route("/registro", methods=['POST']) 
 def registro():
     try:
-        data = request.get_json()  # Obtener los datos JSON del request
+        data = request.get_json()
+        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contraseña', 'sexo', 'pais', 'imagen', 'rol']
+        if not all(field in data for field in campos):
+            return {"error": "Faltan campos obligatorios"}, 400
 
-        # Validar que todos los campos necesarios están presentes
-        required_fields = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contraseña', 'sexo', 'pais', 'imagen']
-        for field in required_fields:
-            if field not in data:
-                return {"error": f"Missing field: {field}"}, 400
-
-        # Crear un nuevo registro con los datos recibidos
         nuevo_registro = Usuario(
             nombre=data['nombre'],
             apellido=data['apellido'],
@@ -281,17 +244,13 @@ def registro():
             imagen=data['imagen'],
             rol=data['rol']
         )
-
-        # Añadir y confirmar el nuevo registro en la base de datos
         db.session.add(nuevo_registro)
         db.session.commit()
 
         return {"message": "Registro creado exitosamente", "usuario_id": nuevo_registro.id}, 201
 
     except Exception as e:
-        # Manejo de cualquier error que pueda ocurrir
         return {"error": str(e)}, 500
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

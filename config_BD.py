@@ -1,30 +1,28 @@
 """
-Este módulo contiene la configuración y la función para la conexión a la base de datos.
+Este módulo contiene la configuración y la función para la conexión a la base de datos PostgreSQL.
 """
 
-import mysql.connector
-from mysql.connector import Error
+from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
+
+# URI de conexión a PostgreSQL
+DATABASE_URI = "postgresql://usuariosgamers_user:ogeJ1nFI1aAu3iv6cOrDEcFoNbkziUeV@dpg-cvusba3e5dus73e0idp0-a/usuariosgamers"
 
 def connectionBD():
     """
     Establece una conexión con la base de datos.
 
     Returns:
-        mydb (mysql.connector.connection_cext.CMySQLConnection): La conexión a la base de datos si es exitosa.
+        engine (sqlalchemy.engine.base.Engine): El motor de conexión a la base de datos si es exitoso.
         None: Si ocurre un error en la conexión.
     """
     try:
-        # Intentar establecer la conexión a la base de datos
-        mydb = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="",
-            database="usuariosgamers"
-        )
-        print("Conexión exitosa")
-        return mydb
-    except Error as err:
-        # Manejar cualquier error que ocurra durante la conexión
+        engine = create_engine(DATABASE_URI)
+        # Probar conexión
+        with engine.connect() as connection:
+            print("Conexión exitosa a la base de datos")
+        return engine
+    except SQLAlchemyError as err:
         print(f"Error en la conexión a la base de datos: {err}")
         return None
 
