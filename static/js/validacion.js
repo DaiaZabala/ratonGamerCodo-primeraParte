@@ -4,7 +4,7 @@ function testearDatos() {
     let apellido = document.getElementById("apellido").value.trim()
     let nombreUsuario = document.getElementById("nombreUsuario").value.trim()
     let correo = document.getElementById("correo").value.trim()
-    let contraseña = document.getElementById("contraseña").value.trim()
+    let contrasena = document.getElementById("contrasena").value.trim()
     let imgUsuario = document.getElementById("img-usuario").value.trim()
     let error = document.getElementById("errores")
 

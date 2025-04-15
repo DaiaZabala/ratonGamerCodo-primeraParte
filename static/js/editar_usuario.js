@@ -9,7 +9,7 @@
             apellido: document.getElementById("apellido").value,
             nombre_usuario: document.getElementById("nombre_usuario").value,
             correo: document.getElementById("correo").value,
-            contraseña: document.getElementById("contraseña").value,
+            contrasena: document.getElementById("contrasena").value,
             sexo: document.getElementById("sexo").value,
             pais: document.getElementById("pais").value,
             imagen: document.getElementById("imagen").value,

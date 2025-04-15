@@ -3,20 +3,20 @@ function guardar() {
     let apellido_ingresado = document.getElementById("apellido").value 
     let nombre_usuario_ingresado = document.getElementById("nombre_usuario").value 
     let correo_electronico_ingresado = document.getElementById("correo").value 
-    let contraseña_ingresado = document.getElementById("contraseña").value 
+    let contrasena_ingresado = document.getElementById("contrasena").value 
     let sexo_ingresado = document.getElementById("sexo").value 
     let pais_ingresado = document.getElementById("pais").value 
     let imagen_ingresada = document.getElementById("imagen").value
     let rol_ingresado = document.getElementById("rol").value 
 
-    console.log(nombre_ingresado,apellido_ingresado,nombre_usuario_ingresado,correo_electronico_ingresado,contraseña_ingresado,sexo_ingresado,pais_ingresado,imagen_ingresada,rol_ingresado);
+    console.log(nombre_ingresado,apellido_ingresado,nombre_usuario_ingresado,correo_electronico_ingresado,contrasena_ingresado,sexo_ingresado,pais_ingresado,imagen_ingresada,rol_ingresado);
     // Se arma el objeto de js 
     let datos = {
         nombre: nombre_ingresado,
         apellido:apellido_ingresado,
         nombre_usuario:nombre_usuario_ingresado,
         correo:correo_electronico_ingresado,
-        contraseña:contraseña_ingresado,
+        contrasena:contrasena_ingresado,
         sexo:sexo_ingresado,
         pais:pais_ingresado,
         imagen:imagen_ingresada,
