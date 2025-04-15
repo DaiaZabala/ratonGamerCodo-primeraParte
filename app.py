@@ -30,18 +30,18 @@ class Usuario(db.Model):
     apellido = db.Column(db.String(50), nullable=False)
     nombre_usuario = db.Column(db.String(50), unique=True, nullable=False)
     correo = db.Column(db.String(100), unique=True, nullable=False)
-    contraseña = db.Column(db.String(255), nullable=False)
+    contrasena = db.Column(db.String(255), nullable=False)
     sexo = db.Column(db.String(10), nullable=False)
     pais = db.Column(db.String(50))
     imagen = db.Column(db.String(200))
     rol = db.Column(db.String(8), nullable=False, default='usuario')
 
-    def __init__(self, nombre, apellido, nombre_usuario, correo, contraseña, sexo, pais=None, imagen=None, rol='2'):
+    def __init__(self, nombre, apellido, nombre_usuario, correo, contrasena, sexo, pais=None, imagen=None, rol='2'):
         self.nombre = nombre
         self.apellido = apellido
         self.nombre_usuario = nombre_usuario
         self.correo = correo
-        self.contraseña = generate_password_hash(contraseña)
+        self.contrasena = generate_password_hash(contrasena)
         self.sexo = sexo
         self.pais = pais
         self.imagen = imagen
@@ -123,9 +123,9 @@ def actualizar(id):
                 setattr(usuario, campo, valor_nuevo)
                 cambios = True
 
-        contraseña_nueva = request.form.get('contraseña')
-        if contraseña_nueva and not check_password_hash(usuario.contraseña, contraseña_nueva):
-            usuario.contraseña = generate_password_hash(contraseña_nueva)
+        contrasena_nueva = request.form.get('contrasena')
+        if contrasena_nueva and not check_password_hash(usuario.contrasena, contrasena_nueva):
+            usuario.contrasena = generate_password_hash(contrasena_nueva)
             cambios = True
 
         if cambios:
@@ -155,7 +155,7 @@ def registrarForm():
         apellido = request.form['apellido']
         nombre_usuario = request.form['nombreUsuario']
         correo = request.form['correo']
-        contraseña = request.form['contraseña']
+        contrasena = request.form['contrasena']
         sexo = request.form['sexo']
         pais = request.form.get('pais')
         imagen = None
@@ -173,7 +173,7 @@ def registrarForm():
             apellido=apellido,
             nombre_usuario=nombre_usuario,
             correo=correo,
-            contraseña=contraseña,
+            contrasena=contrasena,
             sexo=sexo,
             pais=pais,
             imagen=imagen,
@@ -196,10 +196,10 @@ def iniciar_sesion():
         return render_template('iniciar-sesion.html')
 
     correo = request.form['correo']
-    contraseña = request.form['contraseña']
+    contrasena = request.form['contrasena']
     usuario = Usuario.query.filter_by(correo=correo).first()
 
-    if usuario and check_password_hash(usuario.contraseña, contraseña):
+    if usuario and check_password_hash(usuario.contrasena, contrasena):
         session['logueado'] = True
         if usuario.rol == '2':
             return render_template("usuarioRegistrado.html")
@@ -224,12 +224,13 @@ def borrar(id):
         return redirect(url_for('tabla_usuarios'))
     else:
         return jsonify({'error': 'Usuario no encontrado'}), 404
+  
 
 @app.route("/registro", methods=['POST']) 
 def registro():
     try:
         data = request.get_json()
-        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contraseña', 'sexo', 'pais', 'imagen', 'rol']
+        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contrasena', 'sexo', 'pais', 'imagen', 'rol']
         if not all(field in data for field in campos):
             return {"error": "Faltan campos obligatorios"}, 400
 
@@ -238,7 +239,7 @@ def registro():
             apellido=data['apellido'],
             nombre_usuario=data['nombre_usuario'],
             correo=data['correo'],
-            contraseña=data['contraseña'],
+            contrasena=data['contrasena'],
             sexo=data['sexo'],
             pais=data['pais'],
             imagen=data['imagen'],

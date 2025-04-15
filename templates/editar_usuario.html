@@ -20,7 +20,7 @@
                             <td>Apellido: {{ usuario.apellido }}</td>
                             <td>Nombre de usuario: {{ usuario.nombre_usuario }}</td>
                             <td>Correo: {{ usuario.correo }}</td>
-                            <td>Contraseña: {{ usuario.contraseña }}</td>
+                            <td>Contraseña: {{ usuario.contrasena }}</td>
                             <td>Sexo: {{ usuario.sexo }}</td>
                             <td>País: {{ usuario.pais }}</td>
                             <td>Imagen de Usuario: <img src="{{ usuario.imagen }}" alt="imagenUsuario"></td>
@@ -56,7 +56,8 @@
     
                     <div class="entrada">
                         <label for="contraseña">Contraseña:</label>
-                        <input class="input-form" type="password" name="contraseña" id="contraseña" value="{{ usuario.contraseña }}">
+                        <input class="input-form" type="password" name="contrasena" id="contrasena" value="{{ usuario.contrasena }}">
+
                     </div>
     
                     <div class="entrada">
