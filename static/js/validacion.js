@@ -38,8 +38,8 @@ function testearDatos() {
         return false;
     }
 
-    if(!/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/.test(contraseña)){
-        error.textContent="Contraseña: mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número.";
+    if(!/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/.test(contrasena)){
+        error.textContent="Contrasena: mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número.";
         error.style.color="red";
         return false;
     } 
