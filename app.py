@@ -204,7 +204,7 @@ def iniciar_sesion():
         if usuario.rol == '2':
             return render_template("usuarioRegistrado.html")
         elif usuario.rol == '1':
-            return redirect(url_for('tabla_usuarios'))
+            return render_template("tabla_usuarios.html")
         else:
             return render_template("cerrar.html", mensaje="Rol de usuario no válido o indefinido")
     else:
