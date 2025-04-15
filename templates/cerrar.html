@@ -25,11 +25,11 @@
     {% endif %}
     
     <!-- Mostrar el correo y la contraseña ingresada -->
-    {% if correo %}
+    {% if usuario.correo %}
         <p><strong>Correo ingresado:</strong> {{ usuario.correo }}</p>
     {% endif %}
     
-    {% if contrasena %}
+    {% if usuario.contrasena %}
         <p><strong>Contraseña ingresada:</strong> {{ usuario.contrasena }}</p>
     {% endif %}
     
