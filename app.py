@@ -173,7 +173,7 @@ def registrarForm():
             apellido=apellido,
             nombre_usuario=nombre_usuario,
             correo=correo,
-            contrasena=contrasena,
+             contrasena=generate_password_hash(contrasena),
             sexo=sexo,
             pais=pais,
             imagen=imagen,
