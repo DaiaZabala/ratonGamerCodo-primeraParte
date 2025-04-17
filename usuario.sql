@@ -8,7 +8,7 @@ CREATE TABLE usuario (
   apellido VARCHAR(50) NOT NULL,
   nombre_usuario VARCHAR(50) NOT NULL,
   correo VARCHAR(100) NOT NULL,
-  contraseña VARCHAR(100) NOT NULL,
+  contrasena VARCHAR(100) NOT NULL,
   sexo VARCHAR(10) NOT NULL,
   pais VARCHAR(50) DEFAULT NULL,
   imagen VARCHAR(200) DEFAULT NULL,
