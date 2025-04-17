@@ -16,7 +16,7 @@ CREATE TABLE usuario (
 );
 
 -- Volcado de datos para la tabla usuario
-INSERT INTO usuario (nombre, apellido, nombre_usuario, correo, contraseña, sexo, pais, imagen, rol) VALUES
+INSERT INTO usuario (nombre, apellido, nombre_usuario, correo, contrasena, sexo, pais, imagen, rol) VALUES
 ('daiana', 'zabala', 'anto1', 'anto@gmail.com', '130395Dai', 'Mujer', 'Argentina', 'undefined', '1'),
 ('lucas', 'Huenchiman', 'lucas', 'Lucas@gmail.com', '130395Lh', 'Hombre', 'Argentina', 'young-man-dressed-casual-city-sitting.jpg', '1'),
 ('Mateo', 'Safer', 'mateoS', 'mateo@gmail.com', '130395Ma', 'Hombre', 'Argentina', 'close-up-man-making-peace-sign-smile.jpg', '2'),
