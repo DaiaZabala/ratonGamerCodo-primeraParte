@@ -50,7 +50,7 @@
                             </td>
                             <td>{{ usuario.rol }}</td>
                             <td>
-                                <button @click="eliminar(usuario.id)">Eliminar</button>
+                                <button @click="{{url_for('eliminar(usuario.id)')}}  ">Eliminar</button>
 
                                 <button type="button" v-on:click="eliminar(usuario.id)">ELIMINAR</button>
                             </td>
