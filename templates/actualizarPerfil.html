@@ -47,7 +47,9 @@
         <div class="contenedor">
             <div class="datos-user">
                 <h1 id="titulo">Actualiza tus datos</h1>
-                <form class="campos-form" action="{{ url_for('actualizar_perfil', nombre_usuario=usuario.nombre_usuario) }}" method="post" enctype="multipart/form-data">
+                <p>{{usuario.id}}</p>
+                <form class="campos-form" action="{{ url_for('actualizar', id=usuario.id) }}" method="post">
+                    <!-- <form class="campos-form" action="{{ url_for('actualizar_perfil', nombre_usuario=usuario.nombre_usuario) }}" method="post" enctype="multipart/form-data"> -->
                             
                 <div class="avatar-upload" id="avatar">
                     <div class="avatar-edit">
@@ -72,11 +74,11 @@
                     </div>
                     <div class="input-campos" id="password">
                         <img src="../static/img/Avatares/public_15123874.png" alt="Contraseña">
-                        <input type="password" name="contrasena" placeholder="Contraseña">
+                        <input type="password" name="contrasena" placeholder="Contraseña" value="{{ usuario.contrasena}}">
                     </div>
                     <div class="input-campos" id="password">
                         <img src="../static/img/Avatares/public_15123874.png" alt="Confirmar contraseña">
-                        <input type="password" name="confirmar_contrasena" placeholder="Confirmar Contraseña">
+                        <input type="password" name="confirmar_contrasena" placeholder="Confirmar Contraseña" value="{{ usuario.contrasena}}">
                     </div>
                     <div>
                         <p>¿No te acordas la contraseña?<a href="#"> Recupérala</a> </p>
