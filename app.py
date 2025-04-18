@@ -137,6 +137,41 @@ def actualizar(id):
             return redirect(url_for('tabla_usuarios', mensaje='sin_cambios'))
     else:
         return render_template('editar_usuario.html', usuario=usuario)
+    
+@app.route('/actualizar_perfil/<usuario>', methods=['GET', 'POST'])
+def actualizar_perfil(usuario):
+    # Buscar al usuario en la base de datos por nombre de usuario
+    usuario_obj = Usuario.query.filter_by(nombre_usuario=usuario).first_or_404()
+
+    if request.method == 'POST':
+        cambios = False
+
+        # Actualizar nombre de usuario si cambió
+        nuevo_nombre_usuario = request.form.get('nombre_usuario')
+        if nuevo_nombre_usuario and usuario_obj.nombre_usuario != nuevo_nombre_usuario:
+            usuario_obj.nombre_usuario = nuevo_nombre_usuario
+            cambios = True
+
+        # Actualizar correo si cambió
+        nuevo_correo = request.form.get('correo')
+        if nuevo_correo and usuario_obj.correo != nuevo_correo:
+            usuario_obj.correo = nuevo_correo
+            cambios = True
+
+        # Actualizar contraseña si se ingresó una nueva y es distinta
+        nueva_contrasena = request.form.get('contrasena')
+        if nueva_contrasena and not check_password_hash(usuario_obj.contrasena, nueva_contrasena):
+            usuario_obj.contrasena = generate_password_hash(nueva_contrasena)
+            cambios = True
+
+        # Guardar los cambios si hubo alguna modificación
+        if cambios:
+            db.session.commit()
+            return redirect(url_for('actualizar_perfil', usuario=usuario_obj.nombre_usuario, mensaje='modificado'))
+        else:
+            return redirect(url_for('actualizar_perfil', usuario=usuario_obj.nombre_usuario, mensaje='sin_cambios'))
+    
+    return render_template('actualizar_perfil.html', usuario=usuario_obj)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():

@@ -1,27 +1,34 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Crear el contenido del header dinámicamente
     const headerContent = `
-    <header id="header">
-        <div>
-            <a href="{{ url_for('index') }}">
-                  <img id="logo-header" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="logo">
-        </a>
-        </div>
+        <header id="header">
+            <div>
+                <a href="#" id="logo-link" data-url="{{ url_for('index') }}">
+                    <img id="logo-header" src="../static/img/logo.jpg" alt="logo">
+                </a>
+            </div>
 
-        <p id="nombre-web">Ratón Gamer</p>
-        <p id="app-admin">App Admin</p>
+            <p id="nombre-web">Ratón Gamer</p>
+            <p id="app-admin">App Admin</p>
 
-        <nav class="menu">
-            <a id="ingresarUsuarioLink" href="#">Ingresar Usuario</a>
-            <a class="hipervinc-header" href="${urls.cerrar_sesion}">Cerrar sesión</a>
-        </nav>
-    </header>
+            <nav class="menu">
+                <a id="ingresarUsuarioLink" href="#">Ingresar Usuario</a>
+                <a class="hipervinc-header" href="{{ url_for('index') }}">Cerrar sesión</a>
+            </nav>
+        </header>
     `;
 
     // Agregar el contenido del encabezado al principio del body
     document.body.insertAdjacentHTML('afterbegin', headerContent);
 
-    // Manipula los enlaces después de que la página se haya cargado completamente
+    // Obtener la URL del logo y asignarla a su href
+    const logoLink = document.getElementById('logo-link');
+    const logoUrl = logoLink.getAttribute('data-url'); // Obtener la URL generada por Flask
+    logoLink.href = logoUrl; // Establecer el enlace del logo
+
+    // Establecer el enlace de 'Ingresar Usuario' con la URL correspondiente
     const ingresarUsuarioLink = document.getElementById('ingresarUsuarioLink');
-    ingresarUsuarioLink.href = urls.ingresar_usuario;
-    // Puedes manipular otros enlaces aquí según sea necesario
+    ingresarUsuarioLink.href = urls.ingresar_usuario; // Asegúrate de definir 'urls.ingresar_usuario' en tu JS
+
+    // Si tienes otros enlaces o elementos que necesitas manipular, los puedes agregar aquí
 });

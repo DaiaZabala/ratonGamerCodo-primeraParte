@@ -30,21 +30,22 @@ const { createApp } = Vue
         },
         // el id se necesita para buscar en la DB y eliminarlo
         eliminar(id) {
-            
-            const url = 'http://localhost:5000/borrar/'+id;
-            var options = {
-                method: 'DELETE',
-                
-            }
+
+            const url = 'https://localhost:5000/borrar/${id}';
+            const options = {
+              method: 'DELETE'
+            };
             fetch(url, options)
-                .then(res => res.text()) // or res.json()
-                .then(res => {
-                    alert("Eliminado correctamente")
-                    location.reload();
-                })
+              .then(res => res.json()) // Si devolvés JSON en Flask
+              .then(res => {
+                alert("Usuario eliminado correctamente");
+                this.usuarios = this.usuarios.filter(u => u.id !== id); // Actualiza sin recargar
+              })
+              .catch(err => {
+                console.error(err);
+                alert("Error al eliminar el usuario");
+              });
+          }
         }
-       
-        },
-        
     
       }).mount('#app')

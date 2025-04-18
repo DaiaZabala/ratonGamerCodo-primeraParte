@@ -47,45 +47,47 @@
         <div class="contenedor">
             <div class="datos-user">
                 <h1 id="titulo">Actualiza tus datos</h1>
-                <form>
-                    <div class="avatar-upload" id="avatar">  
-                        <div class="avatar-edit" >
-                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                            <label for="imageUpload">
-                            </label>
-                        </div>
-                        <div class="avatar-preview" id="avatar">
-                            <div id="imagePreview" style="background-image: url(../static/img/Avatares/avatar-defecto.svg);">
-                            </div>
-                        </div>
+                <form class="campos-form" action="{{ url_for('actualizar_perfil', nombre_usuario=usuario.nombre_usuario) }}" method="post" enctype="multipart/form-data">
+                            
+                <div class="avatar-upload" id="avatar">
+                    <div class="avatar-edit">
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="imagen" />
+                        <label for="imageUpload">
+                            <img id="user-avatar" src="{{ url_for('static', filename='img/' + usuario.imagen) }}" alt="Imagen de usuario" />
+                        </label>
                     </div>
-                    <div class="input-grupo">
-                        <div class="input-campos" id="userId">
-                            <img src="../static/img/Avatares/Avatar-raton.svg"></img>
-                            <input type="text"placeholder="Usuario">
-                        </div>
-                        <div class="input-campos" id="email">
-                            <img src="../static/img/Avatares/avatar-email.jpeg" alt="Usuario">
-                            <input type="text"placeholder="Email">
-                        </div>
-                        <div class="input-campos" id="password">
-                            <img src="../static/img/Avatares/Llave-contraseña.jpg">
-                            <input type="password" placeholder="Contrasena">
-                        </div>
-                        <div class="input-campos" id="password">
-                            <img src="../static/img/Avatares/Llave-contraseña.jpg">
-                            <input type="password" placeholder="Confirmar Contrasena">
-                        </div>
-                        <div>
-                            <p>¿No te acordas la contraseña?<a href="#"> Recupérala</a> </p>
-                        </div>
-                        <div class="botones">
-                            <button class="modificar" type="button" onclick="modificar()">Actualizar</button>
-                            <!-- <button id="signIn" type="button" class="boton-ingreso">Ingresar</button> -->
-                        </div>
+                    <div class="avatar-preview" id="avatar">
+                        <div id="imagePreview" style="background-image: url(../static/img/Avatares/avatar-defecto.svg);"></div>
                     </div>
-    
-                </form>
+                </div>
+
+                <div class="input-grupo">
+                    <div class="input-campos" id="userId">
+                        <img src="../static/img/logo.jpg" />
+                        <input type="text" name="nombre_usuario" placeholder="Usuario" value="{{ usuario.nombre_usuario }}">
+                    </div>
+                    <div class="input-campos" id="email">
+                        <img src="../static/img/Avatares/email_5356880.png" alt="Email">
+                        <input type="email" name="correo" placeholder="Email" value="{{ usuario.correo }}">
+                    </div>
+                    <div class="input-campos" id="password">
+                        <img src="../static/img/Avatares/public_15123874.png" alt="Contraseña">
+                        <input type="password" name="contrasena" placeholder="Contraseña">
+                    </div>
+                    <div class="input-campos" id="password">
+                        <img src="../static/img/Avatares/public_15123874.png" alt="Confirmar contraseña">
+                        <input type="password" name="confirmar_contrasena" placeholder="Confirmar Contraseña">
+                    </div>
+                    <div>
+                        <p>¿No te acordas la contraseña?<a href="#"> Recupérala</a> </p>
+                    </div>
+                    <div class="botones">
+                        <button class="modificar" type="submit">Actualizar</button>
+                    </div>
+                </div>
+            </form>
+
+
             </div>
         </div>
     </body>
