@@ -105,7 +105,7 @@ def usuario():
         "correo": u.correo,
         "sexo": u.sexo,
         "pais": u.pais,
-        "imagen": u.imagen
+        "imagen": u.imagen,
     } for u in all_registros]
     return jsonify(data_serializada)
 
@@ -173,7 +173,7 @@ def registrarForm():
             apellido=apellido,
             nombre_usuario=nombre_usuario,
             correo=correo,
-             contrasena=generate_password_hash(contrasena),
+            contrasena=contrasena,
             sexo=sexo,
             pais=pais,
             imagen=imagen,
@@ -204,7 +204,7 @@ def iniciar_sesion():
         if usuario.rol == '2':
             return render_template("usuarioRegistrado.html")
         elif usuario.rol == '1':
-            return render_template("tabla_usuarios.html")
+            return redirect(url_for('tabla_usuarios'))
         else:
             return render_template("cerrar.html", mensaje="Rol de usuario no válido o indefinido")
     else:

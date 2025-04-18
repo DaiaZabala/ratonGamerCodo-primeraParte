@@ -43,8 +43,7 @@ const { createApp } = Vue
                     location.reload();
                 })
         }
-    
-    
+       
         },
         
     
