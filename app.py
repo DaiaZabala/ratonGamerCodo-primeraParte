@@ -70,7 +70,7 @@ def trailers():
 def reseñas():
     return render_template('reseñas.html')
 
-@app.route('/actualizarPerfil')
+@app.route('/actualizarPerfil', endpoint='actualizarPerfil_sin_id')
 def actualizarPerfil():
     # Aquí debes obtener el usuario de la base de datos, por ejemplo, si está en sesión
      usuario = Usuario.query.first()  # Este es un ejemplo, modifica según tu lógica
