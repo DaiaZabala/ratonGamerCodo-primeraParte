@@ -235,7 +235,7 @@ def borrar(id):
 def registro():
     try:
         data = request.get_json()
-        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contrasena', 'sexo', 'pais', 'imagen', 'rol']
+        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'contrasena', 'sexo', 'pais', 'rol', 'imagen']
         if not all(field in data for field in campos):
             return {"error": "Faltan campos obligatorios"}, 400
 
@@ -247,8 +247,8 @@ def registro():
             contrasena=data['contrasena'],
             sexo=data['sexo'],
             pais=data['pais'],
-            imagen=data['imagen'],
-            rol=data['rol']
+            rol=data['rol'],
+            imagen=data['imagen']
         )
         db.session.add(nuevo_registro)
         db.session.commit()
