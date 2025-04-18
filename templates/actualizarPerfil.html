@@ -45,44 +45,54 @@
     </head>
     <body>
         <div class="contenedor">
-            <div class="contenedor">
-                <div class="datos-user">
-                    <h1 id="titulo">Actualiza tus datos</h1>
-                    <form class="campos-form" action="{{ url_for('actualizar_perfil', id=usuario.id) }}" method="post" enctype="multipart/form-data">
-                        
-                        <!-- Imagen de perfil -->
-                        <div class="avatar-upload" id="avatar">
-                            <div class="avatar-edit">
-                                <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="imagen" />
-                                <label for="imageUpload">
-                                    <img id="user-avatar" src="{{ url_for('static', filename='img/' + usuario.imagen) }}" alt="Imagen de usuario" />
-                                </label>
-                            </div>
-                        </div>
-            
-                        <!-- Contraseña -->
-                        <div class="input-grupo">
-                            <div class="input-campos" id="password">
-                                <img src="../static/img/Avatares/public_15123874.png" alt="Contraseña">
-                                <input type="password" name="contrasena" placeholder="Nueva Contraseña">
-                            </div>
-                            <div class="input-campos" id="password">
-                                <img src="../static/img/Avatares/public_15123874.png" alt="Confirmar contraseña">
-                                <input type="password" name="confirmar_contrasena" placeholder="Confirmar Contraseña">
-                            </div>
-                        </div>
-            
-                        <div class="botones">
-                            <button class="modificar" type="submit">Actualizar</button>
-                        </div>
-                    </form>
+            <div class="datos-user">
+                <h1 id="titulo">Actualiza tus datos</h1>
+                <p>{{usuario.id}}</p>
+                <form class="campos-form" action="{{ url_for('actualizar_perfil', id=usuario.id) }}" method="post">
+                                            
+                <div class="avatar-upload" id="avatar">
+                    <div class="avatar-edit">
+                        <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="imagen" />
+                        <label for="imageUpload">
+                            <img id="user-avatar" src="{{ url_for('static', filename='img/' + usuario.imagen) }}" alt="Imagen de usuario" />
+                        </label>
+                    </div>
+                    <div class="avatar-preview" id="avatar">
+                        <div id="imagePreview" style="background-image: url(../static/img/Avatares/avatar-defecto.svg);"></div>
+                    </div>
                 </div>
-            </div>
-       
+
+                <div class="input-grupo">
+                    <div class="input-campos" id="userId">
+                        <img src="../static/img/logo.jpg" />
+                        <input type="text" name="nombre_usuario" placeholder="Usuario" value="{{ usuario.nombre_usuario }}">
+                    </div>
+                    <div class="input-campos" id="email">
+                        <img src="../static/img/Avatares/email_5356880.png" alt="Email">
+                        <input type="email" name="correo" placeholder="Email" value="{{ usuario.correo }}">
+                    </div>
+                    <div class="input-campos" id="password">
+                        <img src="../static/img/Avatares/public_15123874.png" alt="Contraseña">
+                        <input type="password" name="contrasena" placeholder="Contraseña" value="{{ usuario.contrasena}}">
+                    </div>
+                    <div class="input-campos" id="password">
+                        <img src="../static/img/Avatares/public_15123874.png" alt="Confirmar contraseña">
+                        <input type="password" name="confirmar_contrasena" placeholder="Confirmar Contraseña" value="{{ usuario.contrasena}}">
+                    </div>
+                    <div>
+                        <p>¿No te acordas la contraseña?<a href="#"> Recupérala</a> </p>
+                    </div>
+                    <div class="botones">
+                        <button class="modificar" type="submit">Actualizar</button>
+                    </div>
+                </div>
+            </form>
 
 
             </div>
         </div>
+    </body>
+    </html>
 
     <footer>
         <div id="cont-grupo-1">

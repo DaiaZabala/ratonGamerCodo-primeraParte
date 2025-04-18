@@ -140,7 +140,7 @@ def actualizar(id):
     else:
         return render_template('editar_usuario.html', usuario=usuario)
     
-# @app.route('/actualizar_perfil/<int:id>', methods=['GET', 'POST'])
+@app.route('/actualizar_perfil/<int:id>', methods=['GET', 'POST'])
 def actualizar_perfil(id):
     # Buscar al usuario en la base de datos por ID
     usuario_obj = Usuario.query.get_or_404(id)
