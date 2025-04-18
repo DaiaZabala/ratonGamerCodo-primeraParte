@@ -49,8 +49,7 @@
                 <h1 id="titulo">Actualiza tus datos</h1>
                 <p>{{usuario.id}}</p>
                 <form class="campos-form" action="{{ url_for('actualizar', id=usuario.id) }}" method="post">
-                    <!-- <form class="campos-form" action="{{ url_for('actualizar_perfil', nombre_usuario=usuario.nombre_usuario) }}" method="post" enctype="multipart/form-data"> -->
-                            
+                                            
                 <div class="avatar-upload" id="avatar">
                     <div class="avatar-edit">
                         <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="imagen" />
