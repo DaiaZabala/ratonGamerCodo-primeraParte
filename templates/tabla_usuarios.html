@@ -68,10 +68,12 @@
 <script src="{{ url_for('static', filename='js/tabla_usuarios.js') }}"></script>
 <script src="{{ url_for('static', filename='js/header_tabla.js') }}"></script>
 <script src="{{ url_for('static', filename='js/links.js') }}"></script>
+
 <script>
     const urls = {
         ingresar_usuario: "{{ url_for('ingresar_usuario') }}",
         tabla_usuarios: "{{ url_for('tabla_usuarios') }}",
+        
     };
     
     const params = new URLSearchParams(window.location.search);

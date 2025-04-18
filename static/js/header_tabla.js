@@ -2,7 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const headerContent = `
     <header id="header">
         <div>
-            <img id="logo-header" src="static/img/logo.jpg" alt="logo">
+            <a href="{{ url_for('index') }}">
+                  <img id="logo-header" src="{{ url_for('static', filename='img/logo.jpg') }}" alt="logo">
+        </a>
         </div>
 
         <p id="nombre-web">Ratón Gamer</p>
@@ -10,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <nav class="menu">
             <a id="ingresarUsuarioLink" href="#">Ingresar Usuario</a>
+            <a class="hipervinc-header" href="${urls.cerrar_sesion}">Cerrar sesión</a>
         </nav>
     </header>
     `;

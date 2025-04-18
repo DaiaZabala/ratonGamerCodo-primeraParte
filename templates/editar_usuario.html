@@ -20,7 +20,6 @@
                             <td>Apellido: {{ usuario.apellido }}</td>
                             <td>Nombre de usuario: {{ usuario.nombre_usuario }}</td>
                             <td>Correo: {{ usuario.correo }}</td>
-                            <td>Contraseña: {{ usuario.contrasena }}</td>
                             <td>Sexo: {{ usuario.sexo }}</td>
                             <td>País: {{ usuario.pais }}</td>
                             <td>Imagen de Usuario: <img src="{{ usuario.imagen }}" alt="imagenUsuario"></td>
@@ -94,6 +93,7 @@
         const urls = {
             tabla_usuarios: "{{ url_for('tabla_usuarios') }}",
             ingresar_usuario: "{{ url_for('ingresar_usuario') }}",
+            cerrar_sesion: "{{ url_for('cerrar_sesion') }}"
         };
     </script>
     <script src="{{ url_for('static', filename='js/editar_usuario.js') }}"></script>
