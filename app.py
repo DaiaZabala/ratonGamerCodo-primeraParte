@@ -140,40 +140,37 @@ def actualizar(id):
     else:
         return render_template('editar_usuario.html', usuario=usuario)
     
-# @app.route('/actualizar_perfil/<usuario>', methods=['GET', 'POST'])
-# def actualizar_perfil(usuario):
-#     # Buscar al usuario en la base de datos por nombre de usuario
-#     usuario_obj = Usuario.query.filter_by(nombre_usuario=usuario).first_or_404()
+# @app.route('/actualizar_perfil/<int:id>', methods=['GET', 'POST'])
+def actualizar_perfil(id):
+    # Buscar al usuario en la base de datos por ID
+    usuario_obj = Usuario.query.get_or_404(id)
 
-#     if request.method == 'POST':
-#         cambios = False
+    if request.method == 'POST':
+        cambios = False
 
-#         # Actualizar nombre de usuario si cambió
-#         nuevo_nombre_usuario = request.form.get('nombre_usuario')
-#         if nuevo_nombre_usuario and usuario_obj.nombre_usuario != nuevo_nombre_usuario:
-#             usuario_obj.nombre_usuario = nuevo_nombre_usuario
-#             cambios = True
+        # Actualizar la imagen si se subió una nueva
+        nueva_imagen = request.files.get('imagen')
+        if nueva_imagen:
+            imagen_filename = secure_filename(nueva_imagen.filename)
+            nueva_imagen.save(os.path.join(app.config['UPLOAD_FOLDER'], imagen_filename))
+            usuario_obj.imagen = imagen_filename
+            cambios = True
 
-#         # Actualizar correo si cambió
-#         nuevo_correo = request.form.get('correo')
-#         if nuevo_correo and usuario_obj.correo != nuevo_correo:
-#             usuario_obj.correo = nuevo_correo
-#             cambios = True
+        # Actualizar la contraseña si se ingresó una nueva
+        nueva_contrasena = request.form.get('contrasena')
+        if nueva_contrasena:
+            usuario_obj.contrasena = generate_password_hash(nueva_contrasena)
+            cambios = True
 
-#         # Actualizar contraseña si se ingresó una nueva y es distinta
-#         nueva_contrasena = request.form.get('contrasena')
-#         if nueva_contrasena and not check_password_hash(usuario_obj.contrasena, nueva_contrasena):
-#             usuario_obj.contrasena = generate_password_hash(nueva_contrasena)
-#             cambios = True
+        # Guardar los cambios si hubo alguna modificación
+        if cambios:
+            db.session.commit()
+            return redirect(url_for('actualizar_perfil', id=usuario_obj.id, mensaje='modificado'))
+        else:
+            return redirect(url_for('actualizar_perfil', id=usuario_obj.id, mensaje='sin_cambios'))
 
-#         # Guardar los cambios si hubo alguna modificación
-#         if cambios:
-#             db.session.commit()
-#             return redirect(url_for('actualizar_perfil', usuario=usuario_obj.nombre_usuario, mensaje='modificado'))
-#         else:
-#             return redirect(url_for('actualizar_perfil', usuario=usuario_obj.nombre_usuario, mensaje='sin_cambios'))
-    
-#     return render_template('actualizar_perfil.html', usuario=usuario_obj)
+    return render_template('actualizar_perfil.html', usuario=usuario_obj)
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
