@@ -94,10 +94,15 @@
                                 <option value="Otro">Otro</option>
                             </select>
                         </div>
+                        <div>
+                            <label for="rol">Elige el Rol de usuario (Ingresar 1- USUARIO 2- ADMINISTRADOR):</label>
+                            <input type="number" id="rol" name="rol" value="{{ usuario.rol }}">
+                        </div>
                         <div class="cont-btn-imgUsuario">
                                 <label for="img-usuario">⬆ Imagen de usuario</label>
                                 <input type="file" name="img-usuario" id="img-usuario">
                         </div>
+
                         <div id="errores"></div>
                         <div>
                             <button id="crear-cuenta" type="submit">CREAR CUENTA</button>

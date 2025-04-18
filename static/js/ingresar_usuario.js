@@ -6,10 +6,11 @@ function guardar() {
     let contrasena_ingresado = document.getElementById("contrasena").value 
     let sexo_ingresado = document.getElementById("sexo").value 
     let pais_ingresado = document.getElementById("pais").value 
-    let imagen_ingresada = document.getElementById("imagen").value
     let rol_ingresado = document.getElementById("rol").value 
+    let imagen_ingresada = document.getElementById("imagen").value
+    
 
-    console.log(nombre_ingresado,apellido_ingresado,nombre_usuario_ingresado,correo_electronico_ingresado,contrasena_ingresado,sexo_ingresado,pais_ingresado,imagen_ingresada,rol_ingresado);
+    console.log(nombre_ingresado,apellido_ingresado,nombre_usuario_ingresado,correo_electronico_ingresado,contrasena_ingresado,sexo_ingresado,pais_ingresado,rol_ingresado,imagen_ingresada);
     // Se arma el objeto de js 
     let datos = {
         nombre: nombre_ingresado,
@@ -19,8 +20,8 @@ function guardar() {
         contrasena:contrasena_ingresado,
         sexo:sexo_ingresado,
         pais:pais_ingresado,
-        imagen:imagen_ingresada,
-        rol:rol_ingresado
+        rol:rol_ingresado,
+        imagen:imagen_ingresada
     }
     console.log(datos);
     

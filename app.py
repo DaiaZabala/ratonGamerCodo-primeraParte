@@ -34,7 +34,7 @@ class Usuario(db.Model):
     sexo = db.Column(db.String(10), nullable=False)
     pais = db.Column(db.String(50))
     imagen = db.Column(db.String(200))
-    rol = db.Column(db.String(8), nullable=False, default='usuario')
+    rol = db.Column(db.String(8), nullable=False, default='2')
 
     def __init__(self, nombre, apellido, nombre_usuario, correo, contrasena, sexo, pais=None, imagen=None, rol='2'):
         self.nombre = nombre
@@ -105,7 +105,9 @@ def usuario():
         "correo": u.correo,
         "sexo": u.sexo,
         "pais": u.pais,
+        "rol":u.rol,
         "imagen": u.imagen,
+        
     } for u in all_registros]
     return jsonify(data_serializada)
 
@@ -158,6 +160,7 @@ def registrarForm():
         contrasena = request.form['contrasena']
         sexo = request.form['sexo']
         pais = request.form.get('pais')
+        rol = request.form['rol']
         imagen = None
 
         if 'img-usuario' in request.files:
@@ -167,6 +170,7 @@ def registrarForm():
                 path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(path)
                 imagen = path
+        
 
         nuevo_usuario = Usuario(
             nombre=nombre,
@@ -176,8 +180,9 @@ def registrarForm():
             contrasena=contrasena,
             sexo=sexo,
             pais=pais,
+            rol=rol,
             imagen=imagen,
-            rol='2'
+           
         )
 
         try:

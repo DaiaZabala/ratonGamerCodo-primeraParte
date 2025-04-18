@@ -12,8 +12,8 @@
             contrasena: document.getElementById("contrasena").value,
             sexo: document.getElementById("sexo").value,
             pais: document.getElementById("pais").value,
+            rol: document.getElementById("rol").value,
             imagen: document.getElementById("imagen").value,
-            rol: document.getElementById("rol").value
         };
 
         fetch(`http://localhost:5000/update/${id}`, {
