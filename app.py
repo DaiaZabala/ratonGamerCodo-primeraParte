@@ -140,8 +140,8 @@ def actualizar(id):
     else:
         return render_template('editar_usuario.html', usuario=usuario)
     
-@app.route('/actualizar_perfil/<int:id>', methods=['GET', 'POST'])
-def actualizar_perfil(id):
+@app.route('/actualizarPerfil/<int:id>', methods=['GET', 'POST'])
+def actualizarPerfil(id):
     # Buscar al usuario en la base de datos por ID
     usuario_obj = Usuario.query.get_or_404(id)
 
@@ -165,11 +165,11 @@ def actualizar_perfil(id):
         # Guardar los cambios si hubo alguna modificación
         if cambios:
             db.session.commit()
-            return redirect(url_for('actualizar_perfil', id=usuario_obj.id, mensaje='modificado'))
+            return redirect(url_for('actualizarPerfil', id=usuario_obj.id, mensaje='modificado'))
         else:
-            return redirect(url_for('actualizar_perfil', id=usuario_obj.id, mensaje='sin_cambios'))
+            return redirect(url_for('actualizarPerfil', id=usuario_obj.id, mensaje='sin_cambios'))
 
-    return render_template('actualizar_perfil.html', usuario=usuario_obj)
+    return render_template('actualizarPerfil.html', usuario=usuario_obj)
 
 
 @app.route('/upload', methods=['POST'])
