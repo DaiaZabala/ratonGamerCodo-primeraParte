@@ -72,7 +72,10 @@ def reseñas():
 
 @app.route('/actualizarPerfil')
 def actualizarPerfil():
-    return render_template('actualizarPerfil.html')
+    # Aquí debes obtener el usuario de la base de datos, por ejemplo, si está en sesión
+    usuario = Usuario.query.first()  # Este es un ejemplo, modifica según tu lógica
+    return render_template('actualizarPerfil.html', usuario=usuario)
+
 
 @app.route('/foro')
 def foro():
