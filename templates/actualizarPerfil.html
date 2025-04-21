@@ -28,28 +28,12 @@
         </div>
 
     </header>
-
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="static/css/registrarse.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
-        <script src="https://kit.fontawesome.com/ce63497daf.js" crossorigin="anonymous"></script>
-        <script src="registro.js"defer></script>
-        <link rel="icon" href="Imagenes/Logos/Logo.png" type="image/png">
-        <title>Registro</title>
-    </head>
     <body>
         <div class="contenedor">
             <div class="datos-user">
                 <h1 id="titulo">Actualiza tus datos</h1>
                 <p>{{usuario.id}}</p>
-                <form class="campos-form" action="{{ url_for('actualizarPerfil', id=usuario.id) }}" method="post">
-                                            
+                <form class="campos-form" action="{{ url_for('actualizarPerfil', id=usuario.id) }}" method="post">                        
                 <div class="avatar-upload" id="avatar">
                     <div class="avatar-edit">
                         <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="imagen" />
