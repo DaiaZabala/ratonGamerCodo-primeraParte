@@ -254,6 +254,7 @@ def iniciar_sesion():
 
     if usuario and check_password_hash(usuario.contrasena, contrasena):
         session['logueado'] = True
+        session['usuario_id'] = usuario.id  # Guardamos el id del usuario en la sesión
         if usuario.rol == '2':
             return render_template("usuarioRegistrado.html")
         elif usuario.rol == '1':
