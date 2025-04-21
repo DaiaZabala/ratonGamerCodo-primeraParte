@@ -143,11 +143,10 @@ def actualizar(id):
 
 @app.route('/actualizarPerfil', methods=['GET', 'POST'])
 def actualizarPerfil():
-    # Verificar que el usuario esté autenticado
     if 'usuario_id' not in session:
-        return redirect(url_for('iniciar_sesion'))
+        return redirect(url_for('iniciar_sesion'))  # Redirige si el usuario no está autenticado
 
-    # Obtener al usuario desde la base de datos usando el ID de la sesión
+    # Usamos el usuario_id almacenado en la sesión para obtener el usuario actual
     usuario = Usuario.query.get_or_404(session['usuario_id'])
 
     if request.method == 'POST':
