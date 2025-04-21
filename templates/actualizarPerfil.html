@@ -33,12 +33,13 @@
             <div class="datos-user">
                 <h1 id="titulo">Actualiza tus datos</h1>
                 <p>{{usuario.id}}</p>
-                <form class="campos-form" action="{{ url_for('actualizarPerfil', id=usuario.id) }}" method="post">                        
+                <form class="campos-form" action="{{ url_for('actualizarPerfil', id=usuario.id) }}" method="post">
+                        
                 <div class="avatar-upload" id="avatar">
                     <div class="avatar-edit">
                         <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" name="imagen" />
                         <label for="imageUpload">
-                            <img id="user-avatar" src="{{ url_for('static', filename='img/' + usuario.imagen) }}" alt="Imagen de usuario" />
+                            <img id="user-avatar" src="{{ url_for('static', filename='temp/' + usuario.imagen) }}" alt="Imagen de usuario" />
                         </label>
                     </div>
                     <div class="avatar-preview" id="avatar">

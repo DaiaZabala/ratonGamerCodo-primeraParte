@@ -126,7 +126,7 @@ def actualizar(id):
             if getattr(usuario, campo) != valor_nuevo:
                 setattr(usuario, campo, valor_nuevo)
                 cambios = True
-
+                
         contrasena_nueva = request.form.get('contrasena')
         if contrasena_nueva and not check_password_hash(usuario.contrasena, contrasena_nueva):
             usuario.contrasena = generate_password_hash(contrasena_nueva)
@@ -140,37 +140,42 @@ def actualizar(id):
     else:
         return render_template('editar_usuario.html', usuario=usuario)
     
+
 @app.route('/actualizarPerfil', methods=['GET', 'POST'])
 def actualizarPerfil():
+    # Verificar que el usuario esté autenticado
     if 'usuario_id' not in session:
         return redirect(url_for('iniciar_sesion'))
 
+    # Obtener al usuario desde la base de datos usando el ID de la sesión
     usuario = Usuario.query.get_or_404(session['usuario_id'])
 
     if request.method == 'POST':
         cambios = False
-        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'sexo', 'pais']  # sumá los que uses
+        campos = ['nombre', 'apellido', 'nombre_usuario', 'correo', 'sexo', 'pais']  # Los campos a actualizar
 
+        # Actualizamos los campos del usuario
         for campo in campos:
             valor_nuevo = request.form.get(campo)
             if valor_nuevo and getattr(usuario, campo) != valor_nuevo:
                 setattr(usuario, campo, valor_nuevo)
                 cambios = True
 
+        # Actualizamos la contraseña si es necesario
         contrasena_nueva = request.form.get('contrasena')
         if contrasena_nueva and not check_password_hash(usuario.contrasena, contrasena_nueva):
             usuario.contrasena = generate_password_hash(contrasena_nueva)
             cambios = True
 
-        # Imagen (si estás subiendo una)
+        # Si hay una nueva imagen, la guardamos
         imagen_archivo = request.files.get('imagen')
         if imagen_archivo and imagen_archivo.filename != '':
-            # Guardás la imagen en static/img o donde quieras
-            ruta = os.path.join('static/img', imagen_archivo.filename)
+            ruta = os.path.join('static/temp', imagen_archivo.filename)  # Ruta para guardar la imagen
             imagen_archivo.save(ruta)
-            usuario.imagen = imagen_archivo.filename
+            usuario.imagen = 'temp/' + imagen_archivo.filename  # Guardamos la ruta en el modelo
             cambios = True
 
+        # Guardamos los cambios en la base de datos
         if cambios:
             db.session.commit()
             flash("Perfil actualizado con éxito")
@@ -178,6 +183,7 @@ def actualizarPerfil():
             flash("No se realizaron cambios")
 
     return render_template('actualizarPerfil.html', usuario=usuario)
+
 
 
 @app.route('/upload', methods=['POST'])
