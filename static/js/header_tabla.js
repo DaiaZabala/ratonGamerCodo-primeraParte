@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const headerContent = `
         <header id="header">
             <div>
-                 <a href="${urls.index}" id="logo-link">
+                <a href="{{url_for('index')}}" id="logo-link" >
                     <img id="logo-header" src="../static/img/logo.jpg" alt="logo">
                 </a>
             </div>
@@ -13,8 +13,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             <nav class="menu">
                 <a id="ingresarUsuarioLink" href="#">Ingresar Usuario</a>
-            
-                <a class="hipervinc-header" href="${urls.index}">Cerrar sesión</a>
+                <a class="hipervinc-header" href="{{ url_for('index') }}">Cerrar sesión</a>
+                
+                <a class="hipervinc-header" href="${urls.tabla_usuarios}">Tabla usuarios</a>
+                <a class="hipervinc-header" id="cerrarSesion" href="${urls.index}">Ingresar Usuario</a>
+        
             </nav>
 
         </header>
@@ -31,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Establecer el enlace de 'Ingresar Usuario' con la URL correspondiente
     const ingresarUsuarioLink = document.getElementById('ingresarUsuarioLink');
     ingresarUsuarioLink.href = urls.ingresar_usuario; // Asegúrate de definir 'urls.ingresar_usuario' en tu JS
+    
 
     // Si tienes otros enlaces o elementos que necesitas manipular, los puedes agregar aquí
 });
