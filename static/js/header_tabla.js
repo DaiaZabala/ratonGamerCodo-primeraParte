@@ -13,8 +13,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             <nav class="menu">
                 <a id="ingresarUsuarioLink" href="#">Ingresar Usuario</a>
+                br
                 <a class="hipervinc-header" href="{{ url_for('index') }}">Cerrar sesión</a>
             </nav>
+
         </header>
     `;
 
