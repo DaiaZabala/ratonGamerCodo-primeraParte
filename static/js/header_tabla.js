@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const headerContent = `
         <header id="header">
             <div>
-                <a href="#" id="logo-link" data-url="{{ url_for('index') }}">
+                <a href="{{url_for('index')}}" id="logo-link" >
                     <img id="logo-header" src="../static/img/logo.jpg" alt="logo">
                 </a>
             </div>

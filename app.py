@@ -183,8 +183,6 @@ def actualizarPerfil():
 
     return render_template('actualizarPerfil.html', usuario=usuario)
 
-
-
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files or request.files['file'].filename == '':
@@ -218,7 +216,6 @@ def registrarForm():
                 file.save(path)
                 imagen = path
         
-
         nuevo_usuario = Usuario(
             nombre=nombre,
             apellido=apellido,
