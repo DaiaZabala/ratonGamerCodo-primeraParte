@@ -13,8 +13,3 @@ Este proyecto fue desarrollado por un equipo de compañeros como proyecto final 
 - **JavaScript**: Interactividad y funcionalidades en el frontend.
 - **Python**: Lógica backend y manejo del servidor.
 
-## 🔗 Demo en vivo
-
-Podés acceder a la plataforma en:
-
-[https://ratongamercodo-primeraparte-xptn.onrender.com/](https://ratongamercodo-primeraparte-xptn.onrender.com/)
